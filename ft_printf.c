@@ -13,71 +13,73 @@
 #include "libft.h"
 #include "libprintf.h"
 
+#define FL_NON      0b00000000
+#define FL_MINUS    0b00000001
+#define FL_PLUS     0b00000010
+#define FL_SPACE    0b00000100
+#define FL_HESH     0b00001000
+#define FL_NULL     0b00010000
+
 int				ft_printf(const char *format_str, ...)
 {
 	va_list		ap;
+	unsigned char fl=0; // delete!!!
 
 	if (!format_str)
 		return (0);
 	va_start(ap, format_str);
-	while (format_str)
+	while (*format_str)
 	{
 		if (*format_str != '%')
-			ft_putchar(*format_str, 1);
-		else
-			format_str = format_str + ft_checkflag(format_str + 1);
+			ft_putchar_fd(*format_str, 1);
+		else {
+            format_str = format_str + ft_checkflag(format_str + 1, &fl);
+            ft_putchar_fd(fl, 1);
+        }
 		format_str++;
-		
+
 	}
 
 	va_end(ap);
-	return (len); //len - count chars were printed 
+	return (0); //len - count chars were printed
 }
 
 // возвращает число на сколько нужно сдвинуть указатель
 // н-р: '*.0d' вернет 4, тк за сдвиг на '%' отвечает прирощение в цикле
+// возможные флаги "-+ #0"
 //
 //на вход приходит указатель на след символ после '%'
-int			ft_checkflag(char *str)
+int			ft_checkflag(char *str, unsigned char *f)
 {
-	char	*flag;
+	unsigned char	flag;
 	int		n;
-	int		wdt;
-	int		rigor;
-	
+
+	flag = FL_NON;
 	n = 0;
-	wdt = 1;
-	rigor = 1;
 	if (*str == '\0')
 		return (0);
-	while (str[n] != '\0' && ft_strchr("-0.*123456789", str[n]))
+	while (str[n] != '\0' && ft_strchr("-0.*123456789+ #", str[n]))
 	{
-		if (str[n] == '*' && str[n + 1] == '.')
-			//запросить значение
-			wdt = va_arg(ap, int);
-		else if (str[n] == '*' && str[n - 1] == '.')
-			rigor = va_arg(ap, int);
-		else if (ft_isdigit(str[n]) == 1 && str[n - 1] != '.')
-		{
-			wdt = ft_atoi(str[n]);
-			while (ft_isdigit(str[n]) == 1)
-				n++;
-			if (str[n] != '.')
-				n--;
-		}
-		else if (str[n] = '.' && (ft_isdigit(str[n + 1]) == 1))
-		{
-			rigor = ft_atoi(str[n + 1]);
-			while (ft_isdigit(str[n]) == 1)
-				n++;
-			n--;
-		}
+		if (str[n] == '-')
+		    flag = flag | FL_MINUS;
+        else if (str[n] == '+')
+            flag = flag | FL_PLUS;
+        else if (str[n] == ' ')
+            flag = flag | FL_SPACE;
+        else if (str[n] == '0')
+            flag = flag | FL_NULL;
+        else if (str[n] == '#')
+            flag = flag | FL_HESH;
 		n++;
 	}
-	ft_align(str, n, wdt, rigor);
+	*f = flag; //delete!!!! изменить прототип!!! удалить отладочные перем
 	return (n);
 }
 
+// далее вызвать функцию которая распределяет на печать в зависимости от типа 'dixcsX'
+// внутри вызывать функцию которая парсит ширину и точность (можно сдалать как две отдельных функции)
+// как возвращать размер напечатанного??? передавать переменную по адресу?
+/*
 void		ft_align(char *str, int n, int wdt, int rigor)
 {
 	int		i;
@@ -153,7 +155,7 @@ void		ft_right_align(char *str, int wdt, int rigor)
 		return ;
 	}
 }
-
+*/
 
 //
 //можно сначала отделить всё обозначение '%...'

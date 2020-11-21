@@ -15,7 +15,9 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
+#include "libft.h"
 
 int		ft_printf(const char *format_str, ...);
+int			ft_checkflag(char *str, unsigned char *f);
 
 #endif
