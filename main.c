@@ -6,4 +6,5 @@
 int     main()
 {
     ft_printf("  %#34+*.*-");
+    ft_printf("  %#34+*.*-");
 }

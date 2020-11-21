@@ -13,68 +13,65 @@
 #include "libft.h"
 #include "libprintf.h"
 
-#define FL_NON      0b00000000
-#define FL_MINUS    0b00000001
-#define FL_PLUS     0b00000010
-#define FL_SPACE    0b00000100
-#define FL_HESH     0b00001000
-#define FL_NULL     0b00010000
+
 
 int				ft_printf(const char *format_str, ...)
 {
-	va_list		ap;
-	unsigned char fl=0; // delete!!!
+	t_options   *opt;
 
-	if (!format_str)
+	if (!format_str || !(opt = (t_options *)malloc(sizeof(t_options))))
 		return (0);
-	va_start(ap, format_str);
+	va_start(opt->ap, format_str);
+	opt->len = 0;
 	while (*format_str)
 	{
 		if (*format_str != '%')
-			ft_putchar_fd(*format_str, 1);
+		{
+            ft_putchar_fd(*format_str, 1);
+            opt->len += 1;
+        }
 		else {
-            format_str = format_str + ft_checkflag(format_str + 1, &fl);
-            ft_putchar_fd(fl, 1);
+            format_str = format_str + ft_checkopt(format_str + 1, opt);
+            //ft_putchar_fd(fl, 1); //для отладки как записался флаг
         }
 		format_str++;
-
 	}
 
-	va_end(ap);
+	va_end(opt->ap);
 	return (0); //len - count chars were printed
 }
 
+int         ft_checkopt(char *str, t_options *opt)
+{
+    int     n;
+
+    n = 0;
+    opt->flag = FL_NON;
+    opt->width = -1;
+    opt->rigor = -1;
+    while (str[n] != '\0' && ft_strchr("-0.*123456789+ #", str[n]))
+    {
+        if (str[n] == '-' || str[n] == '+' || str[n] == ' ' || str[n] == '0'
+            || str[n] == '#')
+            ft_checkflag(str[n], opt);
+        else if (ft_isdigit(str[n]) == 1)
+            n = n + ft_checkwdt((str + n), opt) - 1;
+        else if (str[n] == '*')
+            ft_checkwdt((str + n), opt);
+        else if (str[n] == '.')
+            n = n + ft_checkrigor((str + n + 1), opt);
+        n++;
+    }
+    if (str[n] != '\0')
+        ft_checktype(str[n], opt);
+    return (n);
+}
 // возвращает число на сколько нужно сдвинуть указатель
 // н-р: '*.0d' вернет 4, тк за сдвиг на '%' отвечает прирощение в цикле
 // возможные флаги "-+ #0"
 //
 //на вход приходит указатель на след символ после '%'
-int			ft_checkflag(char *str, unsigned char *f)
-{
-	unsigned char	flag;
-	int		n;
 
-	flag = FL_NON;
-	n = 0;
-	if (*str == '\0')
-		return (0);
-	while (str[n] != '\0' && ft_strchr("-0.*123456789+ #", str[n]))
-	{
-		if (str[n] == '-')
-		    flag = flag | FL_MINUS;
-        else if (str[n] == '+')
-            flag = flag | FL_PLUS;
-        else if (str[n] == ' ')
-            flag = flag | FL_SPACE;
-        else if (str[n] == '0')
-            flag = flag | FL_NULL;
-        else if (str[n] == '#')
-            flag = flag | FL_HESH;
-		n++;
-	}
-	*f = flag; //delete!!!! изменить прототип!!! удалить отладочные перем
-	return (n);
-}
 
 // далее вызвать функцию которая распределяет на печать в зависимости от типа 'dixcsX'
 // внутри вызывать функцию которая парсит ширину и точность (можно сдалать как две отдельных функции)
