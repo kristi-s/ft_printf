@@ -75,12 +75,12 @@ void           ft_checktype(char c, t_options *opt)
     int             num;
     char            *str;
 
-    if (ft_strchr("uxXp", c) == 1)
+    if (ft_strchr("uxXp", c) != NULL)
     {
         u_num = va_arg(opt->ap, unsigned int);
         ft_prn_uxx(u_num, opt);
     }
-    else if (ft_strchr("di", c) == 1)
+    else if (ft_strchr("di", c) != NULL)
     {
         num = va_arg(opt->ap, int);
         ft_prn_di(num, opt);
@@ -93,8 +93,8 @@ void           ft_checktype(char c, t_options *opt)
     else
     {
         if (c == 'c')
-            c = va_arg(opt->ap, char);
-        ft_prn_char(c, opt);
+            c = va_arg(opt->ap, int);
+        ft_prn_char((unsigned char)c, opt);
     }
     return ;
 }

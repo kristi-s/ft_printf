@@ -18,27 +18,28 @@
 int				ft_printf(const char *format_str, ...)
 {
 	t_options   *opt;
+	int         i;
 
 	if (!format_str || !(opt = (t_options *)malloc(sizeof(t_options))))
 		return (0);
 	va_start(opt->ap, format_str);
 	opt->len = 0;
-	while (*format_str)
+	i = 0;
+	while (format_str[i])
 	{
-		if (*format_str != '%')
-		{
-            ft_putchar_fd(*format_str, 1);
-            opt->len += 1;
-        }
+		if (format_str[i] != '%')
+            opt->len = opt->len + write(1, &format_str[i], 1);
 		else {
-            format_str = format_str + ft_checkopt(format_str + 1, opt);
+            i = i + ft_checkopt((char *)format_str + i + 1, opt);
             //ft_putchar_fd(fl, 1); //для отладки как записался флаг
         }
-		format_str++;
+		if (format_str[i] != '/0')
+			i++;
 	}
-
 	va_end(opt->ap);
-	return (0); //len - count chars were printed
+	i = opt->len;
+	free(opt);
+	return (i); //len - count chars were printed
 }
 
 int         ft_checkopt(char *str, t_options *opt)
@@ -62,9 +63,10 @@ int         ft_checkopt(char *str, t_options *opt)
             n = n + ft_checkrigor((str + n + 1), opt);
         n++;
     }
-    if (str[n] != '\0')
-        ft_checktype(str[n], opt);
-    return (n);
+    if (str[n] == '\0')
+        return (n); // ничего не делать, если достигли конца строки, значит далее нет типа
+    ft_checktype(str[n], opt); // тк n элемент это тип и его тоже нужно пролистнуть в следующей строке
+    return (n + 1);
 }
 // возвращает число на сколько нужно сдвинуть указатель
 // н-р: '*.0d' вернет 4, тк за сдвиг на '%' отвечает прирощение в цикле
