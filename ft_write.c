@@ -15,8 +15,7 @@ void           ft_prn_di(int num, t_options *opt)
 
     s = ft_itoa(num);
     l = ft_strlen(s);
-//    if (num == 0 && opt->rigor == 0)
-//		return ; // ничего не печатаем
+
 	if (opt->flag == 0 && opt->rigor == -1) // нет флагов и точности.
 	{
 		ft_prn_str(s, opt);

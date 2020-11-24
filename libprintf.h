@@ -49,4 +49,6 @@ void                ft_prn_char(unsigned char c, t_options *opt);
 void 		ft_add_rigor_posit(char c, size_t l, char *s, t_options *opt);
 int			ft_abs(int n);
 
+char				*ft_change_base(char *base, unsigned int nbr, size_t len);
+
 #endif

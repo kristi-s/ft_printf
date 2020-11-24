@@ -4,26 +4,9 @@
 //сюда приходит только если точно есть флаги
 #include "libprintf.h"
 
-//void			ft_write_int(int num, char *s, t_options *opt)
-//{
-//	size_t 	l;
-//
-//	l = ft_strlen(s);
-//	if (l > opt->rigor)
-//		opt->rigor = l;
-//	if (num >= 0 && (opt->flag & FL_PLUS))
-//		ft_add_rigor_posit('+', l, s, opt);
-//	else if (num >= 0 && (opt->flag & FL_SPACE))
-//		ft_add_rigor_posit(' ', l, s, opt);
-//	else if (num >= 0)
-//		ft_add_rigor_posit('?', l, s, opt);
-//	else if (num < 0)
-//		ft_add_rigor_posit('-', l, (s + 1), opt);
-//
-//
-//}
 
-//для положительных чисел
+
+//для всех чисел
 void 		ft_add_rigor_posit(char c, size_t l, char *s, t_options *opt)
 {
 	int 	i;
