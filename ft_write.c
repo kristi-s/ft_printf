@@ -17,10 +17,18 @@ void           ft_prn_di(int num, t_options *opt)
     l = ft_strlen(s); //нужно ли это здесь?
     if (num == 0 && opt->rigor == 0)
 		return ; // ничего не печатаем
-	if (opt->flag > 0) // есть флаги
-//	    ft_write_int();
-	else // если флаги равны 0 для любых чисел;
-		ft_prn_str(s, opt);
+	if (opt->flag == 0 && opt->rigor == -1) // нет флагов и точности.
+	    ft_prn_str(s, opt);
+	if (l > opt->rigor)
+		opt->rigor = l;
+	if (num >= 0 && (opt->flag & FL_PLUS))
+		ft_add_rigor_posit('+', l, s, opt);
+	else if (num >= 0 && (opt->flag & FL_SPACE))
+		ft_add_rigor_posit(' ', l, s, opt);
+	else if (num >= 0)
+		ft_add_rigor_posit('?', l, s, opt);
+	else if (num < 0)
+		ft_add_rigor_posit('-', l, (s + 1), opt);
 	free(s);
 	return ;
 
