@@ -14,19 +14,11 @@ void           ft_prn_di(int num, t_options *opt)
     char 	*s;
 
     s = ft_itoa(num);
-    l = ft_strlen(s);
+    l = ft_strlen(s); //нужно ли это здесь?
     if (num == 0 && opt->rigor == 0)
 		return ; // ничего не печатаем
-	if (num > 0 && opt->flag > 0)
-	{
-		if (opt->flag & FL_PLUS)
-		{
-			if (l < opt->rigor)
-			{
-				// нужно добавить знак +, нужно дополнить 0 до точности
-			}
-		}
-	}
+	if (opt->flag > 0) // есть флаги
+//	    ft_write_int();
 	else // если флаги равны 0 для любых чисел;
 		ft_prn_str(s, opt);
 	free(s);
@@ -39,7 +31,7 @@ void           ft_prn_di(int num, t_options *opt)
 
 void           ft_prn_str(char *str, t_options *opt)
 {
-    int     l;
+    size_t    l;
     int     i;
 
     i = 0;

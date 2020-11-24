@@ -37,7 +37,7 @@ typedef struct		s_options
 
 int		            ft_printf(const char *format_str, ...);
 int                 ft_checkopt(char *str, t_options *opt);
-void 		            ft_checkflag(char c, t_options *opt);
+void 		        ft_checkflag(char c, t_options *opt);
 int                 ft_checkwdt(char *str, t_options *opt);
 int                 ft_checkrigor(char *str, t_options *opt);
 void                ft_checktype(char c, t_options *opt);
@@ -45,5 +45,7 @@ void                ft_prn_uxx(unsigned int u_num, t_options *opt);
 void                ft_prn_di(int num, t_options *opt);
 void                ft_prn_str(char *str, t_options *opt);
 void                ft_prn_char(unsigned char c, t_options *opt);
+
+void 		ft_add_rigor_posit(char c, size_t l, char *s, t_options opt);
 
 #endif
