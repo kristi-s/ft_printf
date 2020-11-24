@@ -14,27 +14,36 @@ void           ft_prn_di(int num, t_options *opt)
     char 	*s;
 
     s = ft_itoa(num);
-    l = ft_strlen(s); //нужно ли это здесь?
-    if (num == 0 && opt->rigor == 0)
-		return ; // ничего не печатаем
+    l = ft_strlen(s);
+//    if (num == 0 && opt->rigor == 0)
+//		return ; // ничего не печатаем
 	if (opt->flag == 0 && opt->rigor == -1) // нет флагов и точности.
-	    ft_prn_str(s, opt);
-	if (l > opt->rigor)
+	{
+		ft_prn_str(s, opt);
+		free(s);
+		return ;
+	}
+	if (opt->rigor != -1 && (opt->flag & FL_NULL))
+		opt->flag = opt->flag - FL_NULL;
+//	если ригор -1, есть флаг нул и число - то ширину приравнивать в ригор
+	if (opt->rigor == -1 && (opt->flag & FL_NULL) && opt->width > 0 && num < 0)
+		opt->rigor = opt->width - 1;
+	if ((l > opt->rigor) && (num >= 0) && (opt->rigor != 0))
 		opt->rigor = l;
+	if (num < 0 && (l - 1 > opt->rigor))
+		opt->rigor = l - 1;
 	if (num >= 0 && (opt->flag & FL_PLUS))
 		ft_add_rigor_posit('+', l, s, opt);
 	else if (num >= 0 && (opt->flag & FL_SPACE))
 		ft_add_rigor_posit(' ', l, s, opt);
-	else if (num >= 0)
+	else if (num > 0)
 		ft_add_rigor_posit('?', l, s, opt);
+	else if (num == 0)
+		ft_add_rigor_posit('?', 0, s, opt);
 	else if (num < 0)
-		ft_add_rigor_posit('-', l, (s + 1), opt);
+		ft_add_rigor_posit('-', l - 1, (s + 1), opt);
 	free(s);
 	return ;
-
-    // превращать в строку, считать длину цифр и добавлять при необходимости знак и доп до ширины
-    //opt->len = opt->len + l;//печетать в зависимости от опций и записывать длину напечатанного.
-// !!! после печати отчистить, то что вернул itoa
 }
 
 void           ft_prn_str(char *str, t_options *opt)

@@ -43,8 +43,18 @@ int    ft_checkwdt(char *str, t_options *opt)
     }
     else if (*str == '*')
         width = va_arg(opt->ap, int);
-    opt->width = width;
+    opt->width = ft_abs(width);
+    if (width < 0)
+    	opt->flag = opt->flag | FL_MINUS;
     return (i);
+}
+
+int			ft_abs(int n)
+{
+	if (n >= 0)
+		return (n);
+	else
+		return (-n);
 }
 
 int    ft_checkrigor(char *str, t_options *opt)
@@ -53,7 +63,7 @@ int    ft_checkrigor(char *str, t_options *opt)
     int      i;
 
     i = 0;
-    rigor = 1;
+    rigor = 0;
     if (ft_isdigit(*str) == 1)
     {
         rigor = ft_atoi(str);
@@ -65,9 +75,13 @@ int    ft_checkrigor(char *str, t_options *opt)
         rigor = va_arg(opt->ap, int);
         i = 1;
     }
-    opt->rigor = rigor;
+    if (rigor >= 0)
+    	opt->rigor = rigor;
     return (i);
 }
+
+
+
 // 'cspdiuxX%'
 void           ft_checktype(char c, t_options *opt)
 {
