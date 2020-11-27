@@ -8,16 +8,16 @@ void 		ft_add_rigor_hex(size_t l, char *s, t_options *opt)
 	i = 0;
 	if (!(opt->flag & FL_MINUS))
 	{
-		if ((opt->flag & FL_NULL) && ft_strncmp(s, "0", 2))
+		if (opt->flag & FL_NULL)// && ft_strncmp(s, "0", 2))
 			c0 = '0';
 		else
 			c0 = ' ';
 		while ((opt->rigor + i++) < opt->width)
 			opt->len = opt->len + write(1, &c0, 1);
 	}
-	while (l++ < opt->rigor)	//наращивается l на 1 в любом случае
+	while (opt->rigor != -1 && (l++ < opt->rigor))	//наращивается l на 1 в любом случае
 		opt->len = opt->len + write(1, "0", 1);
-	l--;
+	l--; // проверить нужно ли уменьшать, если ригор будет -1??????
 	if (ft_strncmp(s, "0", 2) || opt->rigor != 0)
 		opt->len = opt->len + write(1, s, ft_strlen(s));
 	while ((opt->flag & FL_MINUS) && (l++ < opt->width))
@@ -36,13 +36,6 @@ char 	*ft_itoa_hex(char *base, unsigned int nbr, size_t len, t_options *opt)
 	i = 0;
 	str[0] = '0';
 	str[1] = '\0';
-	if ((opt->flag & FL_HESH) && (ft_strchr("xX", opt->spcf)))
-	{
-		str[1] = opt->spcf;
-		str[2] = '0';
-		str[3] = '\0';
-		i = 2;
-	}
 	if (nbr == 0)
 		return (str);
 	while (nbr != 0)
@@ -50,6 +43,11 @@ char 	*ft_itoa_hex(char *base, unsigned int nbr, size_t len, t_options *opt)
 		str[i] = *(base + (nbr % len));
 		nbr = nbr / len;
 		i++;
+	}
+	if ((opt->flag & FL_HESH) && (ft_strchr("xX", opt->spcf)))
+	{
+		str[i++] = opt->spcf;
+		str[i++] = '0';
 	}
 	str[i] = '\0';
 	len = i;

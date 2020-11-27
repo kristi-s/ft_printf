@@ -17,22 +17,22 @@ void 		ft_add_rigor_posit(char c, size_t l, char *s, t_options *opt)
 	{
 		if ((c == '+' || c == ' ' || c == '-'))
 			i = 1;
-		if ((opt->flag & FL_NULL) && s[0] != '0')
+		if (opt->flag & FL_NULL) //&& s[0] != '0')
 			c0 = '0';
 		else
 			c0 = ' ';
-		while ((opt->rigor + i++) < opt->width)
+		while ((opt->width != -1) && ((opt->rigor + i++) < opt->width))
 			opt->len = opt->len + write(1, &c0, 1);
 	}
 	if (c == '+' || c == ' ' || c == '-')
 		opt->len = opt->len + write(1, &c, 1);
 	while (l++ < opt->rigor)	//наращивается l на 1 в любом случае
 		opt->len = opt->len + write(1, "0", 1);
-	if (s[0] != '0' && opt->rigor != 0)
+	if (s[0] != '0' || opt->rigor != 0)
 		opt->len = opt->len + write(1, s, ft_strlen(s));
 	if (!(c == '+' || c == ' '|| c == '-'))
 		l--;
-	while ((opt->flag & FL_MINUS) && (l++ < opt->width))
+	while ((opt->flag & FL_MINUS) && (opt->width != -1) && (l++ < opt->width))
 		opt->len = opt->len + write(1, " ", 1);
 	return ;
 }

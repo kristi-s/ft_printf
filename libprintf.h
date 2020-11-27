@@ -27,6 +27,7 @@
 #define BASE_BIG	"0123456789ABCDEF"
 #define BASE_SMALL	"0123456789abcdef"
 #define SIZE_BASE	16
+#define NULL_STR	"(null)"
 
 typedef struct		s_options
 {
