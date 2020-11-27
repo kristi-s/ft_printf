@@ -83,84 +83,32 @@ int    ft_checkrigor(char *str, t_options *opt)
 
 
 // 'cspdiuxX%'
-void           ft_checktype(char c, t_options *opt)
+void           ft_checktype(t_options *opt)
 {
     unsigned int    u_num;
     int             num;
     char            *str;
 
-    if (ft_strchr("uxXp", c) != NULL)
+    if (ft_strchr("uxXp", opt->spcf) != NULL)
     {
         u_num = va_arg(opt->ap, unsigned int);
         ft_prn_uxx(u_num, opt);
     }
-    else if (ft_strchr("di", c) != NULL)
+    else if (ft_strchr("di", opt->spcf) != NULL)
     {
         num = va_arg(opt->ap, int);
         ft_prn_di(num, opt);
     }
-    else if (c == 's')
+    else if (opt->spcf == 's')
     {
         str = va_arg(opt->ap, char*);
         ft_prn_str(str, opt);
     }
     else
     {
-        if (c == 'c')
-            c = va_arg(opt->ap, int);
-        ft_prn_char((unsigned char)c, opt);
+        if (opt->spcf == 'c')
+			opt->spcf = (unsigned char)va_arg(opt->ap, int);
+        ft_prn_char((unsigned char)opt->spcf, opt);
     }
     return ;
 }
-
-
-
-
-/*
-// как обрабатывать rigor с char???
-//
-//-------------CHAR-------------------------------//
-//left align 
-void		ft_l_alg_chr(int c, int wdt, int rigor)
-{
-	ft_putchar_fd((char)c, 0);
-	while (wdt > 1)
-	{
-		ft_putchar_fd(' ', 0);
-		wdt--;
-	}	
-	return ;
-}
-
-// right align
-void		ft_r_alg_chr(int c, int wdt, int rigor)
-{
-	while (wdt > 1)
-	{
-		ft_putchar_fd(' ', 0);
-		wdt--;
-	}	
-	ft_putchar_fd((char)c, 0);
-	return ;
-}
-
-//rigth align with '0'
-void		ft_null_alg_chr(int c, int wdt, int rigor)
-{
-	while (wdt > 1)
-	{
-		ft_putchar_fd('0', 0);
-		wdt--;
-	}	
-	ft_putchar_fd((char)c, 0);
-	return ;
-}
-
-//--------------------STRING-----------------------//
-
-//left align
-void		ft_l_alg_str(char *s1, wdt, rigor)
-{
-	
-}
-*/

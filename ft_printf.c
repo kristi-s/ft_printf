@@ -33,7 +33,7 @@ int				ft_printf(const char *format_str, ...)
             i = i + ft_checkopt((char *)format_str + i + 1, opt);
             //ft_putchar_fd(fl, 1); //для отладки как записался флаг
         }
-		if (format_str[i] != '/0')
+		if (format_str[i] != '\0')
 			i++;
 	}
 	va_end(opt->ap);
@@ -65,7 +65,8 @@ int         ft_checkopt(char *str, t_options *opt)
     }
     if (str[n] == '\0')
         return (n); // ничего не делать, если достигли конца строки, значит далее нет типа
-    ft_checktype(str[n], opt); // тк n элемент это тип и его тоже нужно пролистнуть в следующей строке
+	opt->spcf = str[n];
+	ft_checktype(opt);     // тк n элемент это тип и его тоже нужно пролистнуть в следующей строке
     return (n + 1);
 }
 // возвращает число на сколько нужно сдвинуть указатель

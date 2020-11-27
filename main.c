@@ -6,18 +6,18 @@
 
 int     main()
 {
-    ft_printf("  %#34+*.*-");
-    ft_printf(">>hello  |%0+20.0d", 0);
-    printf("\n>>%0+20.0d", 0); //!!!!
-    printf("--------------\n");
-	ft_printf("|%.0d|\n", 0);
-	printf("|%.0d|\n", 0);
-	ft_printf("|%.d|\n", 0);
-	printf("|%.d|\n", 0);
-	ft_printf("|%5.d|\n", 0);
-	printf("|%5.d|\n", 0);
-	ft_printf("|%5.0d|\n", 0);
-	printf("|%5.0d|\n", 0);
-	ft_printf("|%-5.d|\n", 0);
-	printf("|%-5.d|\n", 0);
+//    ft_printf("  %#34+*.*-");
+//    ft_printf(">>hello  |%0+20.0d", 0);
+//    printf("\n>>%0+20.0d", 0); //!!!!
+//    printf("--------------\n");
+//	ft_printf("|%.10u|\n", 4294967295);
+//	printf("|%.10u|\n", 4294967295);
+//	ft_printf("|%.10u|\n", 123456);
+//	printf("|%.10u|\n", 123456);
+//	ft_printf("|%15.10u|\n", 123456);
+//	printf("|%15.10u|\n", 123456);
+	ft_printf("|%#15x|\n", 123456);
+	printf("|%#15x|\n", 123456);
+	ft_printf("|%-#15x|\n", 4294967295);
+	printf("|%-#15x|\n", 4294967295);
 }
