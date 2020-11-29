@@ -63,6 +63,23 @@ void          ft_prn_uxx(unsigned int u_num, t_options *opt)
 	return ;
 // !!!! --------------------ПРОВЕРИТЬ УСЛОВИЯ СРАВНЕНИЯ l и opt->rigor(при -1 получается бесконечный цикл!)
 }
+
+void          ft_prn_ptr(unsigned long long l_num, t_options *opt)
+{
+	int     l;
+	char 	*s;
+
+	s = ft_itoa_ptr(BASE_SMALL, l_num, SIZE_BASE, opt);
+	if (l_num == 0 && opt->rigor == 0)
+		opt->rigor = 2;
+	else if (opt->rigor == 0)
+		opt->rigor = -1;
+	ft_prn_str(s, opt);
+	free(s);
+	return ;
+// !!!! --------------------ПРОВЕРИТЬ УСЛОВИЯ СРАВНЕНИЯ l и opt->rigor(при -1 получается бесконечный цикл!)
+}
+
 // флаг '+' и ' ' используются только для десятичных чисел
 void           ft_prn_di(int num, t_options *opt)
 {

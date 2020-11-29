@@ -57,4 +57,7 @@ int			ft_abs(int n);
 char				*ft_itoa_hex(char *base, unsigned int nbr, size_t len, t_options *opt);
 void 				ft_add_rigor_hex(size_t l, char *s, t_options *opt);
 
+void          ft_prn_ptr(unsigned long long l_num, t_options *opt);
+char 	*ft_itoa_ptr(char *base, unsigned long long nbr, size_t len, t_options *opt);
+
 #endif

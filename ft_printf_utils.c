@@ -86,14 +86,20 @@ int    ft_checkrigor(char *str, t_options *opt)
 void           ft_checktype(t_options *opt)
 {
     unsigned int    u_num;
+    unsigned long long 		l_num;
     int             num;
     char            *str;
 
-    if (ft_strchr("uxXp", opt->spcf) != NULL)
+    if (ft_strchr("uxX", opt->spcf) != NULL)
     {
         u_num = va_arg(opt->ap, unsigned int);
         ft_prn_uxx(u_num, opt);
     }
+    else if (opt->spcf == 'p')
+	{
+		l_num = va_arg(opt->ap, unsigned long long);
+		ft_prn_ptr(l_num, opt);
+	}
     else if (ft_strchr("di", opt->spcf) != NULL)
     {
         num = va_arg(opt->ap, int);

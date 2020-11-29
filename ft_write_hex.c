@@ -62,6 +62,43 @@ char 	*ft_itoa_hex(char *base, unsigned int nbr, size_t len, t_options *opt)
 	return (str);
 
 }
+
+char 	*ft_itoa_ptr(char *base, unsigned long long nbr, size_t len, t_options *opt)
+{
+	char			*str;
+	char 			tmp;
+	int				i;
+
+	if (!(str = malloc(18 * sizeof(char))))
+		return (0);
+	i = 0;
+	str[0] = '0';
+	str[1] = '\0';
+	if (nbr == 0)
+		i = 1;
+//		return (str);
+	while (nbr != 0)
+	{
+		str[i] = *(base + (nbr % len));
+		nbr = nbr / len;
+		i++;
+	}
+	str[i++] = 'x';
+	//if (opt->rigor != 0)
+		str[i++] = '0';
+	str[i] = '\0';
+	len = i;
+	while (i > len / 2)
+	{
+		tmp = str [i - 1];
+		str[i - 1] = str[len - i];
+		str[len - i] = tmp;
+		i--;
+	}
+//	write(1, str, len);
+	return (str);
+
+}
 /*
 int	 main()
 {
