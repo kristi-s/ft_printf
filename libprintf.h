@@ -12,10 +12,7 @@
 
 #ifndef LIBPRINTF_H
 # define LIBPRINTF_H
-# include <unistd.h>
-# include <stdlib.h>
 # include <stdarg.h>
-#include <string.h>
 # include "libft.h"
 
 #define FL_NON      0b00000000
@@ -28,6 +25,7 @@
 #define BASE_SMALL	"0123456789abcdef"
 #define SIZE_BASE	16
 #define NULL_STR	"(null)"
+#define NULL_PTR	"0x0"
 
 typedef struct		s_options
 {
@@ -55,9 +53,9 @@ void 		ft_add_rigor_posit(char c, size_t l, char *s, t_options *opt);
 int			ft_abs(int n);
 
 char				*ft_itoa_hex(char *base, unsigned int nbr, size_t len, t_options *opt);
-void 				ft_add_rigor_hex(size_t l, char *s, t_options *opt);
+void 				ft_add_rigor_hex(unsigned int u_num, size_t l, char *s, t_options *opt);
 
 void          ft_prn_ptr(unsigned long long l_num, t_options *opt);
-char 	*ft_itoa_ptr(char *base, unsigned long long nbr, size_t len, t_options *opt);
+
 
 #endif

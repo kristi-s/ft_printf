@@ -1,35 +1,56 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_write_hex.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: droslyn <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/30 19:16:16 by droslyn           #+#    #+#             */
+/*   Updated: 2020/11/30 19:24:57 by droslyn          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libprintf.h"
 
-void 		ft_add_rigor_hex(size_t l, char *s, t_options *opt)
+void 		ft_add_rigor_hex(unsigned int u_num, size_t l, char *s, t_options *opt)
 {
 	int 	i;
 	char	c0;
 
 	i = 0;
+
 	if (!(opt->flag & FL_MINUS))
 	{
-		if (opt->flag & FL_NULL)// && ft_strncmp(s, "0", 2))
+		if (opt->flag & FL_NULL)
 			c0 = '0';
 		else
 			c0 = ' ';
 		while ((opt->rigor + i++) < opt->width)
 			opt->len = opt->len + write(1, &c0, 1);
 	}
-	while (opt->rigor != -1 && (l++ < opt->rigor))	//наращивается l на 1 в любом случае
+/////////
+
+	if (opt->flag & FL_HESH && opt->rigor > 0 && u_num != 0)
+		opt->len = opt->len + write(1, s, 2);
+
+/////////
+	while (opt->rigor != -1 && ((int)l++ < opt->rigor))
 		opt->len = opt->len + write(1, "0", 1);
-	l--; // проверить нужно ли уменьшать, если ригор будет -1??????
-	if (ft_strncmp(s, "0", 2) || opt->rigor != 0)
+	l--;
+	if (opt->rigor == -1 || ((opt->rigor != 0 || u_num != 0) && !(opt->flag & FL_HESH)))
 		opt->len = opt->len + write(1, s, ft_strlen(s));
-	while ((opt->flag & FL_MINUS) && (l++ < opt->width))
+	else if (opt->flag & FL_HESH && opt->rigor > 0)
+		opt->len = opt->len + write(1, (s + 2), ft_strlen(s) - 2);
+	while ((opt->flag & FL_MINUS) && ((int)l++ < opt->width))
 		opt->len = opt->len + write(1, " ", 1);
 	return ;
 }
 
-char 	*ft_itoa_hex(char *base, unsigned int nbr, size_t len, t_options *opt)
+char 		*ft_itoa_hex(char *base, unsigned int nbr, size_t len, t_options *opt)
 {
-	char			*str;
-	char 			tmp;
-	int				i;
+	char	*str;
+	char 	tmp;
+	int		i;
 
 	if (!(str = malloc(11 * sizeof(char))))
 		return (0);
@@ -51,60 +72,14 @@ char 	*ft_itoa_hex(char *base, unsigned int nbr, size_t len, t_options *opt)
 	}
 	str[i] = '\0';
 	len = i;
-	while (i > len / 2)
+	while (i > (int)len / 2)
 	{
 		tmp = str [i - 1];
 		str[i - 1] = str[len - i];
 		str[len - i] = tmp;
 		i--;
 	}
-//	write(1, str, len);
 	return (str);
-
 }
 
-char 	*ft_itoa_ptr(char *base, unsigned long long nbr, size_t len, t_options *opt)
-{
-	char			*str;
-	char 			tmp;
-	int				i;
 
-	if (!(str = malloc(18 * sizeof(char))))
-		return (0);
-	i = 0;
-	str[0] = '0';
-	str[1] = '\0';
-	if (nbr == 0)
-		i = 1;
-//		return (str);
-	while (nbr != 0)
-	{
-		str[i] = *(base + (nbr % len));
-		nbr = nbr / len;
-		i++;
-	}
-	str[i++] = 'x';
-	//if (opt->rigor != 0)
-		str[i++] = '0';
-	str[i] = '\0';
-	len = i;
-	while (i > len / 2)
-	{
-		tmp = str [i - 1];
-		str[i - 1] = str[len - i];
-		str[len - i] = tmp;
-		i--;
-	}
-//	write(1, str, len);
-	return (str);
-
-}
-/*
-int	 main()
-{
-	char *str;
-
-	str = ft_change_base("0123456789abcdef", 123456, 16);
-	return 0;
-}
-*/
