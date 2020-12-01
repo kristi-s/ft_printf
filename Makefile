@@ -12,8 +12,8 @@
 
 NAME = libftprintf.a
 LIBFT = ./libft
-SRCS = ft_printf.c ft_printf_utils.c ft_write.c ft_write_hex.c ft_write_int.c \
-		ft_write_ptr.c
+SRCS = ft_printf.c ft_printf_utils.c ft_write_hex.c ft_write_int.c \
+		ft_write_ptr.c ft_write_str.c ft_write_char.c
 OBJS = ${SRCS:.c=.o}
 CC = gcc
 RM = rm -f

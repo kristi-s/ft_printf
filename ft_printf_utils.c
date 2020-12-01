@@ -12,7 +12,7 @@
 
 #include "libprintf.h"
 
-void	ft_checkflag(char c, t_options *opt)
+void		ft_checkflag(char c, t_options *opt)
 {
 	if (c == '\0')
 		return ;
@@ -28,10 +28,18 @@ void	ft_checkflag(char c, t_options *opt)
 		opt->flag = opt->flag | FL_HESH;
 }
 
-int		ft_checkwdt(char *str, t_options *opt)
+static int	ft_abs(int n)
 {
-	int width;
-	int i;
+	if (n >= 0)
+		return (n);
+	else
+		return (-n);
+}
+
+int			ft_checkwdt(char *str, t_options *opt)
+{
+	int		width;
+	int		i;
 
 	i = 0;
 	width = 1;
@@ -49,18 +57,10 @@ int		ft_checkwdt(char *str, t_options *opt)
 	return (i);
 }
 
-int		ft_abs(int n)
+int			ft_checkrigor(char *str, t_options *opt)
 {
-	if (n >= 0)
-		return (n);
-	else
-		return (-n);
-}
-
-int		ft_checkrigor(char *str, t_options *opt)
-{
-	int rigor;
-	int i;
+	int		rigor;
+	int		i;
 
 	i = 0;
 	rigor = 0;
@@ -80,7 +80,7 @@ int		ft_checkrigor(char *str, t_options *opt)
 	return (i);
 }
 
-void	ft_checktype(t_options *opt)
+void		ft_checktype(t_options *opt)
 {
 	if (ft_strchr("uxX", opt->spcf) != NULL)
 		ft_prn_uxx(va_arg(opt->ap, unsigned int), opt);
@@ -96,5 +96,4 @@ void	ft_checktype(t_options *opt)
 			opt->spcf = (unsigned char)va_arg(opt->ap, int);
 		ft_prn_char((unsigned char)opt->spcf, opt);
 	}
-	return ;
 }

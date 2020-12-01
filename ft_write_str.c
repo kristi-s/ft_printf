@@ -1,30 +1,19 @@
-//
-// Created by Donny Roslyn on 12/1/20.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_write_str.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: droslyn <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/01 16:46:05 by droslyn           #+#    #+#             */
+/*   Updated: 2020/12/01 16:47:19 by droslyn          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libprintf.h"
 
-void		ft_prn_str(char *str, t_options *opt)
+static void		ft_write_str(int i, char *str, t_options *opt)
 {
-	size_t	l;
-	int		i;
-
-	i = 0;
-	if (!str)
-	{
-		if (!(str = ft_strdup(NULL_STR)))
-			return ;
-		ft_prn_str(str, opt);
-		free(str);
-		return ;
-	}
-	l = ft_strlen(str);
-	if (opt->rigor == -1 && opt->width == -1)
-	{
-		opt->len = opt->len + write(1, str, l);
-		return;
-	}
-	if (opt->rigor == -1 || opt->rigor > (int)l)
-		opt->rigor = (int)l;
 	if (opt->flag & FL_MINUS)
 	{
 		while (i < opt->rigor)
@@ -39,11 +28,37 @@ void		ft_prn_str(char *str, t_options *opt)
 	{
 		if (opt->width != -1)
 		{
-			while (opt->width-- > opt->rigor)    // наращиваем l, пока не достигнем нужной ширины
+			while (opt->width-- > opt->rigor)
 				opt->len = opt->len + write(1, " ", 1);
 		}
 		while (i < opt->rigor)
 			opt->len = opt->len + write(1, &str[i++], 1);
 	}
+	return ;
+}
+
+void			ft_prn_str(char *str, t_options *opt)
+{
+	size_t		l;
+	int			i;
+
+	i = 0;
+	if (!str)
+	{
+		if (!(str = ft_strdup(NULL_STR)))
+			return ;
+		ft_prn_str(str, opt);
+		free(str);
+		return ;
+	}
+	l = ft_strlen(str);
+	if (opt->rigor == -1 && opt->width == -1)
+	{
+		opt->len = opt->len + write(1, str, l);
+		return ;
+	}
+	if (opt->rigor == -1 || opt->rigor > (int)l)
+		opt->rigor = (int)l;
+	ft_write_str(i, str, opt);
 	return ;
 }

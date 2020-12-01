@@ -9,6 +9,10 @@
 int     main() {
 	int a = 0;
 	int b = 0;
+
+	a = printf("|%-10c|\n", 'A');
+	b = ft_printf("|%-10c|\n", 'A');
+	printf("a = %d, b = %d\n", a, b);
 //
 //	int *p;
 //	p = &a;
@@ -49,5 +53,5 @@ int     main() {
 
 	b = ft_printf("|%s%d%p%%%i%u%x%X%c|\n","bonjour", 42, &a, 42, 42, 42, 42, 'c');
 	a = printf("|%s%d%p%%%i%u%x%X%c|\n","bonjour", 42, &a, 42, 42, 42, 42, 'c');
-		printf("a = %d, b = %d\n", a, b);
+	printf("a = %d, b = %d\n", a, b);
 }

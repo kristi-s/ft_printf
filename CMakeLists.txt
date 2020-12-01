@@ -54,4 +54,4 @@ add_executable(ft_printf
         libft/libft.h
         ft_printf.c
         ft_printf_utils.c
-        libprintf.h main.c ft_write.c ft_write_int.c ft_write_hex.c ft_write_ptr.c ft_write_str.c)
+        libprintf.h main.c ft_write_int.c ft_write_hex.c ft_write_ptr.c ft_write_str.c ft_write_char.c)

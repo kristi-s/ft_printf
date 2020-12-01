@@ -12,32 +12,7 @@
 
 #include "libprintf.h"
 
-int				ft_printf(const char *format_str, ...)
-{
-	t_options	*opt;
-	int			i;
-
-	if (!format_str || !(opt = (t_options *)malloc(sizeof(t_options))))
-		return (0);
-	va_start(opt->ap, format_str);
-	opt->len = 0;
-	i = 0;
-	while (format_str[i])
-	{
-		if (format_str[i] != '%')
-			opt->len = opt->len + write(1, &format_str[i], 1);
-		else
-			i = i + ft_checkopt((char *)format_str + i + 1, opt);
-		if (format_str[i] != '\0')
-			i++;
-	}
-	va_end(opt->ap);
-	i = opt->len;
-	free(opt);
-	return (i);
-}
-
-int				ft_checkopt(char *str, t_options *opt)
+static int		ft_checkopt(char *str, t_options *opt)
 {
 	int			n;
 
@@ -63,4 +38,29 @@ int				ft_checkopt(char *str, t_options *opt)
 	opt->spcf = str[n];
 	ft_checktype(opt);
 	return (n + 1);
+}
+
+int				ft_printf(const char *format_str, ...)
+{
+	t_options	*opt;
+	int			i;
+
+	if (!format_str || !(opt = (t_options *)malloc(sizeof(t_options))))
+		return (0);
+	va_start(opt->ap, format_str);
+	opt->len = 0;
+	i = 0;
+	while (format_str[i])
+	{
+		if (format_str[i] != '%')
+			opt->len = opt->len + write(1, &format_str[i], 1);
+		else
+			i = i + ft_checkopt((char *)format_str + i + 1, opt);
+		if (format_str[i] != '\0')
+			i++;
+	}
+	va_end(opt->ap);
+	i = opt->len;
+	free(opt);
+	return (i);
 }

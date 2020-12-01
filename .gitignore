@@ -3,3 +3,4 @@ a.out
 test.c
 cmake-build-debug
 .idea
+*.o
