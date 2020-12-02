@@ -71,9 +71,9 @@ void			ft_prn_di(int num, t_options *opt)
 	if (opt->rigor != -1 && (opt->flag & FL_NULL))
 		opt->flag = opt->flag - FL_NULL;
 	if (opt->rigor == -1 && (opt->flag & FL_NULL) && !(opt->flag & FL_MINUS) &&
-			opt->width > 0)
+			opt->width > 1)
 		opt->rigor = opt->width - 1;
-	if ((l > opt->rigor) && (num >= 0) && (opt->rigor != 0))
+	if ((l > opt->rigor) && (num >= 0) && (opt->rigor != 0 || num != 0))
 		opt->rigor = l;
 	if (num < 0 && (l - 1 > opt->rigor))
 		opt->rigor = l - 1;
@@ -98,7 +98,8 @@ void			ft_prn_un_int(unsigned int u_num, t_options *opt)
 	l = (int)ft_strlen(s);
 	if (opt->rigor != -1 && (opt->flag & FL_NULL))
 		opt->flag = opt->flag - FL_NULL;
-	if (opt->rigor == -1 || ((l > opt->rigor) && (opt->rigor != 0)))
+	if (opt->rigor == -1 || ((l > opt->rigor) && (opt->rigor != 0 ||
+			u_num != 0)))
 		opt->rigor = l;
 	if (u_num == 0 && opt->rigor == 0)
 		l = 0;

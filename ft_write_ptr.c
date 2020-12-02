@@ -12,7 +12,7 @@
 
 #include "libprintf.h"
 
-char		*ft_str_reverse(char *str)
+char			*ft_str_reverse(char *str)
 {
 	size_t		i;
 	size_t		len;

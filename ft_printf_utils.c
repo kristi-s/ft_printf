@@ -53,7 +53,11 @@ int			ft_checkwdt(char *str, t_options *opt)
 		width = va_arg(opt->ap, int);
 	opt->width = ft_abs(width);
 	if (width < 0)
+	{
 		opt->flag = opt->flag | FL_MINUS;
+		if (opt->flag & FL_NULL)
+			opt->flag = opt->flag - FL_NULL;
+	}
 	return (i);
 }
 

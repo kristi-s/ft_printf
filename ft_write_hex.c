@@ -27,7 +27,8 @@ static void	ft_organized(unsigned int u_num, int l, t_options *opt)
 	}
 	if ((opt->flag & FL_HESH) && opt->rigor + 2 > l)
 		opt->rigor = opt->rigor + 2;
-	else if (((l > opt->rigor) && (opt->rigor != 0)) || opt->rigor == -1)
+	else if (((l > opt->rigor) && (opt->rigor != 0 || u_num != 0)) ||
+				opt->rigor == -1)
 		opt->rigor = l;
 }
 

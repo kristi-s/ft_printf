@@ -24,16 +24,18 @@ CFLAGS = -Wall -Wextra -Werror
 
 ${NAME}: ${OBJS}
 		${MAKE} -C ${LIBFT}
-		cp ./libft/libft.a ./$(NAME)
+		cp ./libft/libft.a ./${NAME}
 		ar rcs ${NAME} ${OBJS}
 
 all:	${NAME}
 
 clean:
 		${RM} ${OBJS}
+		${MAKE} fclean -C ${LIBFT}
 
 fclean:	clean
 		${RM} ${NAME}
+		${RM} libft.a
 
 re:		fclean all
 

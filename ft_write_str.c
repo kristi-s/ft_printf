@@ -6,7 +6,7 @@
 /*   By: droslyn <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 16:46:05 by droslyn           #+#    #+#             */
-/*   Updated: 2020/12/01 16:47:19 by droslyn          ###   ########.fr       */
+/*   Updated: 2020/12/02 18:13:08 by droslyn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void		ft_write_str(int i, char *str, t_options *opt)
 
 void			ft_prn_str(char *str, t_options *opt)
 {
-	size_t		l;
+	int			l;
 	int			i;
 
 	i = 0;
@@ -51,14 +51,14 @@ void			ft_prn_str(char *str, t_options *opt)
 		free(str);
 		return ;
 	}
-	l = ft_strlen(str);
+	l = (int)ft_strlen(str);
 	if (opt->rigor == -1 && opt->width == -1)
 	{
 		opt->len = opt->len + write(1, str, l);
 		return ;
 	}
-	if (opt->rigor == -1 || opt->rigor > (int)l)
-		opt->rigor = (int)l;
+	if (opt->rigor == -1 || opt->rigor > l)
+		opt->rigor = l;
 	ft_write_str(i, str, opt);
 	return ;
 }
